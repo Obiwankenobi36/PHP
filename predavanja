@@ -1,0 +1,302 @@
+konstante 
+
+define('PDV', 25);
+echo 'Iznos poreza je = ‘;
+echo PDV
+echo '%';
+
+stvarna (a=100) i logička (a=true) vrijednost varijable
+
+-----------------------------------------------------------------------------------------
+Tablica laži 
+
+
+Ključna riječ false          	                        $var = false;
+                                                        Ovakvom deklaracijom varijable definirali smo da je njezina logička vrijednost laž.
+
+Cjelobrojna vrijednost 0                                $var = 0;
+                                                        Logička vrijednost varijable je laž ako varijabla ima vrijednost nule.
+
+Vrijednost s pokretnim zarezom 0.0                      $var = 0.0;
+                                                        Isto kao u prethodnom primjeru, samo što je ovdje nula napisana u decimalnom obliku. PHP slijedi engleski pravopis tako                                                         da ne prepoznaje decimalni zarez već decimalnu točku.
+
+Prazni niz znakova ('' '') i niz znakova ''0''          $var = '';
+                                                        Prazni niz znakova ima logičku vrijednost laži.
+Polje s nula elemenata                                  $var = array();
+                                                        Polje bez elemenata baš kao i prazni niz znakova ima logički vrijednost laži.
+Objekt bez vrijednosti ili funkcije                     Objekti će se detaljno obraditi u posebnom poglavlju i tada će biti opisana ova značajka.
+
+Vrijednost NULL $var = NULL;                            Varijabla definirana na ovaj način ima logičku vrijednost laži.
+
+
+
+$titleF1 = 'firstname';
+4. $titleF2 = 'lastname';
+5.
+6. $$titleF1 = 'Petar';
+7. $$titleF2 = 'Petric';
+8.
+9. echo $firstname;
+10. echo $lastname;
+
+out: Petar Petric
+
+
+
+. = operator spajanja srtingova 
+echo $ime.' '.$prez; - razmak između stringova
+<span class="date">'.$datum.'</span> - ugradnja varijable 
+
+$a++ = $a=$a+1
+$a-- = $a=$a-1
+
+
+$a = 10;
+echo $a++
+=> 10
+
+$a = 10;
+echo ++$a
+=> 11
+
+
+( += ) – uvećaj za određenu vrijednost     $a += 10 = $a = $a + 10
+( -= ) – umanji za određenu vrijednost     $b -= 5 = $b = $b - 5
+( *= ) – pomnoži za određenu vrijednost
+( /= ) – podijeli s određenom vrijednosti
+
+Operatori:
+• Veće ( > )
+• Manje ( < )
+• Veće ili jednako ( >= )
+• Manje ili jednako ( <= )
+• Jednako ( == )
+• Identično ( === ) - varijable moraju biti iste vrijednosti i istog tipa da bi bile jednake
+• Različito ( != )
+
+
+if($a == 'Perl') Usporedba vrijednosti varijable s nizom znakova. Obavezno mora biti u navodnicima
+
+• Operatori pretvorbe:
+• (int) – pretvara u integer
+• (bool) – pretvara u boolean
+• (float) – pretvara u float
+• (string) – pretvara u string
+• (array) – pretvara u polje
+• (object) – pretvara u objekt
+• (unset) – pretvara u NULL
+
+$b = (int)$b;
+
+logički operatori
+- Operatori za povezivanje više izraza
+- Daju jedinstveno logičko rješenje u obliku logičke vrijednosti (true ili false)
+
+Operatori:
+• Logičko I – ( && )
+• Logičko ILI – ( || )
+• Negacija – ( ! )
+
+if($a >= 100 && $a <= 1000)
+
+include()
+require() - daje fatal error ako dođe do greške
+
+------------------------------------------------------------------------------------------------------------------------------------------
+
+$timestamp = time();  Funkcija time prikazuje trenutni timestamp, integer
+$datum = date("d.m.Y.");
+
+
+Tablica paramtara
+
+d                       Dan u mjesecu,2 znamenke                01 – 31
+j                       Dan u mjesecu, bez vodeće nule          1 – 31
+l (malo slovo L)        Puni engleski naziv dana u tjednu       Monday (ponedjeljak) – Sunday (nedjelja)
+N                       Dan u tjednu                            1 (ponedjeljak) – 7 (nedjelja)
+m                       Mjesec,2 znamenke                       01 – 12
+n                       Mjesec,bez vodeće nule                  1 – 12
+Y                       Godina,4 znamenke                       Npr. 1999 ili 2014
+y                       Godina,2 znamenke                       Npr. 99 ili 14
+H                       Sat,24 satni format                     00 – 23
+i                       Minute, s vodećim nulama                00 – 59
+s                       Sekunde, s vodećim nulama               00 – 59
+
+
+
+$timestamp = $timestamp + (7 * 24 * 60 * 60); Dodaje 7 dana na trenutni timestamp
+$datum = date("d.m.Y.", $timestamp);
+
+$timestamp = strtotime("2019-02-11") Funkcija koja iz datuma moze napraviti timestamp
+
+-------------
+$timestamp = strtotime("2004-10-11");
+
+$dan_u_tj = date("N", $timestamp);
+
+switch($dan_u_tj)
+{
+case 1:
+$dan = "Pondedjeljak";
+break;
+
+case 2:
+$dan = "Utorak";
+break;
+
+case 3:
+$dan = "Srijeda";
+break
+---------------
+
+
+
+$i = 1;
+
+while($i <= 100)
+{
+echo '
+<tr>
+<td>'.$i.'.</td>
+<td>Petar Petric</td>
+<td>A1</td>
+</tr>';
+
+$i++;
+------------------
+
+
+echo '
+<select name="dan">
+<option value="">Odaberite:</option>';
+
+$i = 1;
+
+while($i <= 31)
+{
+echo '<option value="'.$i.'">'.$i.'</option>';
+
+$i++;
+}
+echo '
+</select>';
+---------------------
+
+$i = 1;
+
+do
+{
+echo $i;
+echo '<br />';
+
+$i++;
+}while($i <= 10);
+- Poseban oblik, razlika je u tome sto ce se za razliku od while petlje ova petlja izvrsiti bar jednom
+--------------
+
+
+
+echo "Ocjenite našu uslugu ocjenom od 1 do 10:<br />";
+
+for($i = 1; $i <= 10; $i++)
+{
+echo '<input type="checkbox" name="" value="" />
+Ocjena: '.$i;
+echo '<br />';
+}
+---------------
+
+for($i = 100; $i >= 1; $i--) - petlja odbrojava unatrag
+-----------------
+echo '
+<table border="1">
+<thead>
+<tr>
+<td>Rbr.</td>
+<td>Grad</td>
+<td>Temperatura zraka</td>
+<td>Tlak zraka</td>
+<td>Trenutno vrijeme</td>
+</tr>
+</thead>
+<tbody>’;
+
+for($i=1; $i<=100; $i++)
+{
+echo '
+<tr>’;
+
+for($j=1; $j<=5; $j++)
+{
+echo '<td>...</td>';
+}
+
+echo '
+</tr>';
+}
+
+echo '
+</tbody>
+</table>';
+------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+Polja
+
+
+
+$p = array(15, 48, 110);
+
+echo '<pre>';
+print_r($p);
+echo '</pre>';
+
+echo $p[2];
+-----------------
+
+$imena = array(10 => 'Ivan',
+               11 => 'Marko',
+               12 => 'Ivana');
+               
+------------------------------    
+
+$p = array();
+
+$p[] = 15;
+$p[] = 48;
+$p[] = 110;
+- Dodavanje vrijednosti u polje, automatsko odredjivanje kljuceva
+- Novi kljuc uvijek za 1 veci od najveceg indeksa
+- Nezna nastaviti asocijativne kljuceve
+
+-------------------------------
+
+$ucenik = array("ime" => "Petar",
+"prez" => "Petrić",
+"god" => 23,
+"adresa" => array("ulica" => "Put 7",
+"pbr" => "10000",
+"grad" => "Zagreb")
+);
+
+$ucenici = array();
+$ucenici[] = $ucenik;
+
+echo $ucenici[0][‘adresa’][‘grad’];
+
+---------------------------
+
+
+
+
+
+
