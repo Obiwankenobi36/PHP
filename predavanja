@@ -11,14 +11,14 @@ stvarna (a=100) i logička (a=true) vrijednost varijable
 Tablica laži 
 
 
-Ključna riječ false          	                        $var = false;
+Ključna riječ false          	                          $var = false;
                                                         Ovakvom deklaracijom varijable definirali smo da je njezina logička vrijednost laž.
 
 Cjelobrojna vrijednost 0                                $var = 0;
                                                         Logička vrijednost varijable je laž ako varijabla ima vrijednost nule.
 
 Vrijednost s pokretnim zarezom 0.0                      $var = 0.0;
-                                                        Isto kao u prethodnom primjeru, samo što je ovdje nula napisana u decimalnom obliku. PHP slijedi engleski pravopis tako                                                         da ne prepoznaje decimalni zarez već decimalnu točku.
+                                                        Isto kao u prethodnom primjeru, samo što je ovdje nula napisana u decimalnom obliku. PHP slijedi engleski pravopis                                                           tako da ne prepoznaje decimalni zarez već decimalnu točku.
 
 Prazni niz znakova ('' '') i niz znakova ''0''          $var = '';
                                                         Prazni niz znakova ima logičku vrijednost laži.
@@ -244,12 +244,6 @@ echo '
 
 
 
-
-
-
-
-
-
 Polja
 
 
@@ -294,6 +288,210 @@ $ucenici[] = $ucenik;
 echo $ucenici[0][‘adresa’][‘grad’];
 
 ---------------------------
+
+
+
+. $ucenici = array();
+4.
+5. $ucenici[0]["ime"] = "Petar";
+6. $ucenici[0]["prez"] = "Petric";
+7. $ucenici[0]["god"] = 23;
+8. $ucenici[0]["adresa"]["ulica"] = "Put 7";
+9. $ucenici[0]["adresa"]["pbr"] = 10000;
+10. $ucenici[0]["adresa"]["grad"] = "Zagreb";
+11.
+12. $ucenici[1]["ime"] = "Ivana";
+13. $ucenici[1]["prez"] = "Ivic";
+14. $ucenici[1]["god"] = 25;
+15. $ucenici[1]["adresa"]["ulica"] = "Cesta 15";
+16. $ucenici[1]["adresa"]["pbr"] = 10000;
+17. $ucenici[1]["adresa"]["grad"] = "Zagreb";
+
+-----------------------------------------------------
+
+foreach($p as $key => $val)
+{
+echo 'U kljucu '.$key.' se nalazi vrijednost '.$val;
+echo '<br />';
+}
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Rad s datotekama
+
+echo '
+<form method="POST" action="" enctype="multipart/form-data">
+
+Datoteka:
+<input type="file" name="datoteka" value="" />
+
+<input type="submit" name="btn_upload" value="Upload" />
+
+</form>'
+
+
+if(isset($_POST["btn_upload"]))
+{
+
+echo '<pre>';
+print_r($_FILES);
+echo '</pre>';
+}
+
+
+Preimenovanje datoteke
+
+1. $name = $_FILES["datoteka"]["name"];
+2. $type = $_FILES["datoteka"]["type"];
+3. $tmp_name = $_FILES["datoteka"]["tmp_name"];
+4. $error = $_FILES["datoteka"]["error"];
+5. $size = $_FILES["datoteka"]["size"];
+6.
+7. $path = "images/";
+8.
+9. if($error == 0)
+10. {
+11. $name_array = explode(".", $name);
+12.
+13. $ext = end($name_array);
+14.
+15. $new_file_name = "img_".time().".".$ext;
+16.
+17. $new_name = $path.$new_file_name;
+18.
+19. if(move_uploaded_file($tmp_name, $new_name))
+20. {
+21. echo 'Datoteka uspjesno prenesena';
+22. }
+23. else
+24. {
+25. echo 'Doslo je do pogreske kod spremanje datoteke';
+26. }
+27. }
+28. else
+29. {
+30. echo 'Doslo je do pogreske kod prijenosa datoteke';
+31. }
+
+
+---------------------
+
+Upload više datoteka
+
+echo '
+4. <form method="POST" action="" enctype="multipart/form-data">
+5.
+6. Datoteka 1:
+7. <input type="file" name="datoteka[]" value="" /><br />
+8. Datoteka 2:
+9. <input type="file" name="datoteka[]" value="" /><br />
+10. Datoteka 3:
+11. <input type="file" name="datoteka[]" value="" /><br />
+12. <br />
+13. <input type="submit" name="btn_upload" value="Upload" />
+14.
+15. </form>';
+
+- Naziv mora biti razlicit za svako polje, preporuka je koristiti uglate zagrade
+
+----------------------------------
+
+$path = "images/";
+2. $names = $_FILES["datoteka"]["name"];
+3.
+4. foreach($names as $key => $name)
+5. {
+6. $type = $_FILES["datoteka"]["type"][$key];
+7. $tmp_name = $_FILES["datoteka"]["tmp_name"][$key];
+8. $error = $_FILES["datoteka"]["error"][$key];
+9. $size = $_FILES["datoteka"]["size"][$key];
+10.
+11. if($error == 0)
+12. {
+13. $name_array = explode(".", $name);
+14. $ext = end($name_array);
+15. $new_file_name = "img_".time()."_".$key.".".$ext;
+16. $new_name = $path.$new_file_name;
+17.
+18. if(move_uploaded_file($tmp_name, $new_name))
+19. {
+20. echo 'Datoteka uspjesno prenesena';
+21. }
+22. else
+23. {
+24. echo 'Doslo je do pogreske kod spremanje datoteke';
+25. }
+26. }
+27. else
+28. {
+29. echo 'Doslo je do pogreske kod prijenosa datoteke';
+30. }
+31. }
+
+--------------------------------
+
+Čitanje datoteke
+
+
+$filename = "podaci.csv"; - Putanja do datoteke koju zelimo procitati
+
+$fp = fopen($filename, "r"); - Konekcija na datoteku
+
+$data = fread($fp, filesize($filename)); - Funkcija koja cita zadani broj baytova iz datoeke
+
+fclose($fp);
+echo nl2br($data);
+
+------------------------------
+
+
+Modovi 
+
+r       Otvara datoteku samo za čitanje. Postavlja pokazivač na početak datoteke.
+r+      Otvara datoteku za čitanje i pisanje. Postavlja pokazivač na početak datoteke.
+w       Otvara datoteku samo za pisanje. Postavlja pokazivač na početak datoteke. Ako datoteka ne postoji, pokušat će ju kreirati.
+w+      Otvara datoteku za pisanje i čitanje. Postavlja pokazivač na početak datoteke. Ako datoteka ne postoji, pokušat će ju kreirati.
+a       Otvara datoteku samo za pisanje. Pokazivač postavlja na kraj datoteke. Ako datoteka ne postoji, pokušat će ju kreirati.
+a+      Otvara datoteku za čitanje i pisanje. Pokazivač postavlja na kraj datoteke. Ako datoteka ne postoji, pokušat će ju kreirati.
+
+
+-------------------------------
+
+Čitanje i obrada podataka
+
+
+$filename = "podaci.csv";
+
+$file_array = file($filename); - Funkcija koja cita cijeli sadrzaj datoteke i stvara polje
+
+for($i=0; $i<count($file_array); $i++)
+{
+$file_array[$i] = trim($file_array[$i], "\n");  - Skida new line oznaku sa svakog retka
+}
+
+echo '<pre>';
+print_r($file_array);
+echo '</pre>';
+-----------------------------
+
+Pisanje u datoteku
+
+
+$filename = "podaci.csv";
+
+$fp = fopen($filename, "a");
+
+$redak = "Jurica;Jurkovic;1994-10-25\n";
+
+fwrite($fp, $redak); - Funkcija za zapisivanje u datoteku
+
+fclose($fp);
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Funkcije
 
 
 
