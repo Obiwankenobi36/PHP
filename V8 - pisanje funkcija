@@ -1,0 +1,117 @@
+<?php
+
+// conf.php
+
+$dani_imena = array(
+1 => "Ponedjeljak",
+2 => "Utorak",
+3 => "Srijeda",
+4 => "Cetvrtak",
+5 => "Petak",
+6 => "Subota",
+7 => "Nedjelja");
+
+$mjeseci_imena = array(
+1 => "sijecanj",
+2 => "veljaca",
+3 => "ozujak",
+4 => "travanj",
+5 => "svibanj",
+6 => "lipanj",
+7 => "srpanj",
+8 => "kolovoz",
+9 => "rujan",
+10=> "listopad",
+11=> "studeni",
+12=> "prosinac");
+
+?>
+-----------------------------------------------
+
+<?php
+
+// function_datetime.php
+// 2022-04-27 -> Srijeda, 27. travnja 2022.
+
+include("conf.php");
+
+function datetime_convert($date)
+{
+  global $dani_imena;
+  global $mjeseci_imena;
+
+  $d = date("j", strtotime($date));
+  $m = date("n", strtotime($date));
+  $g = date("Y", strtotime($date));
+
+  $dan_br = date("N", strtotime($date));
+
+  $dan_ime = $dani_imena[$dan_br];
+
+  $mj_ime = $mjeseci_imena[$m];
+
+  $rez = "".$dan_ime.", ".$d.". ".$mj_ime." ".$g.".";
+
+  return $rez;
+}
+
+$datum = datetime_convert("2022-04-26");
+
+echo $datum;
+
+?>
+--------------------------------------------
+
+<?php
+
+// function_select.php
+
+include("conf.php");
+
+function create_select($name, $data_array)
+{
+  $html = '';
+
+  $html .= '
+  <select name="'.$name.'">';
+
+  if(is_array($data_array))
+  {
+    foreach($data_array as $key => $val)
+    {
+      $html .= '<option value="'.$key.'">'.$val.'</option>';
+    }
+  }
+
+  $html .= '
+  </select>';
+
+  return $html;
+}
+
+echo '
+<form method="POST" action="">';
+
+  $html_select = create_select("mjesec", $mjeseci_imena);
+
+  echo $html_select;
+
+  echo '
+  <br />'; 
+
+  $html_select = create_select("dan", $dani_imena);
+
+  echo $html_select;  
+
+  echo '
+  <br />';
+  
+  $html_select = create_select("prog_jezik", array("PHP", "HTML", "JavaScript"));
+
+  echo $html_select;  
+
+
+echo '
+</form>';
+
+?>
