@@ -1,0 +1,197 @@
+// data.php
+
+$studenti = array();
+
+$studenti[0]["ime"]             = "Ivo";
+$studenti[0]["prezime"]         = "Ivic";
+$studenti[0]["adresa"]["ulica"] = "Put ceste 5";
+$studenti[0]["adresa"]["pbr"]   = 10000;
+$studenti[0]["adresa"]["grad"]  = "Zagreb";
+
+$studenti[1]["ime"]             = "Petar";
+$studenti[1]["prezime"]         = "Petric";
+$studenti[1]["adresa"]["ulica"] = "Ulica 45";
+$studenti[1]["adresa"]["pbr"]   = 10000;
+$studenti[1]["adresa"]["grad"]  = "Zagreb";
+
+$studenti[2]["ime"]             = "Ana";
+$studenti[2]["prezime"]         = "Anic";
+$studenti[2]["adresa"]["ulica"] = "Obala 3";
+$studenti[2]["adresa"]["pbr"]   = 21000;
+$studenti[2]["adresa"]["grad"]  = "Split";
+
+$studenti[3]["ime"]             = "Jure";
+$studenti[3]["prezime"]         = "Juric";
+$studenti[3]["adresa"]["ulica"] = "Skale 34";
+$studenti[3]["adresa"]["pbr"]   = 23000;
+$studenti[3]["adresa"]["grad"]  = "Zadar";
+
+$studenti[4]["ime"]             = "Mate";
+$studenti[4]["prezime"]         = "Matic";
+$studenti[4]["adresa"]["ulica"] = "Putic 3";
+$studenti[4]["adresa"]["pbr"]   = 23000;
+$studenti[4]["adresa"]["grad"]  = "Zadar";
+
+$studenti[7]["ime"]             = "Ivo";
+$studenti[7]["prezime"]         = "Matic";
+$studenti[7]["adresa"]["ulica"] = "Putic 4";
+$studenti[7]["adresa"]["pbr"]   = 23000;
+$studenti[7]["adresa"]["grad"]  = "Zadar";
+
+$studenti[11]["ime"]             = "Marko";
+$studenti[11]["prezime"]         = "Antic";
+$studenti[11]["adresa"]["ulica"] = "Stube 15";
+$studenti[11]["adresa"]["pbr"]   = 10000;
+$studenti[11]["adresa"]["grad"]  = "Zagreb";
+
+$studenti[15]["ime"]             = "Ante";
+$studenti[15]["prezime"]         = "Juric";
+$studenti[15]["adresa"]["ulica"] = "Uvala 3";
+$studenti[15]["adresa"]["pbr"]   = 51000;
+$studenti[15]["adresa"]["grad"]  = "Rijeka";
+
+?>
+
+-------------------------------------------------
+
+// polje01.php
+
+include("data.php");
+
+$i = 2;
+
+$ime    = $studenti[$i]["ime"];
+$prez   = $studenti[$i]["prezime"];
+$adresa = $studenti[$i]["adresa"]["ulica"] . ' ' . 
+          $studenti[$i]["adresa"]["pbr"] . ' ' .
+          $studenti[$i]["adresa"]["grad"];
+
+echo '
+<p>
+    <b>Ime:</b> '.$ime.'<br />
+    <b>Prezime:</b> '.$prez.'<br />
+    <b>Adresa:</b> '.$adresa.'<br />
+</p>';
+
+?>
+
+------------------------------------------------
+
+<?php
+
+// polje02.php
+
+include("data.php");
+
+for($i=0; $i < count($studenti); $i++)
+{
+    $ime    = $studenti[$i]["ime"];
+    $prez   = $studenti[$i]["prezime"];
+    $adresa = $studenti[$i]["adresa"]["ulica"] . ' ' . 
+              $studenti[$i]["adresa"]["pbr"] . ' ' .
+              $studenti[$i]["adresa"]["grad"];
+    
+    echo '
+    <p>
+        <b>Ime:</b> '.$ime.'<br />
+        <b>Prezime:</b> '.$prez.'<br />
+        <b>Adresa:</b> '.$adresa.'<br />
+    </p>';
+}
+
+?>
+-------------------------------------------------
+
+<?php
+
+// polje03.php
+
+include("data.php");
+
+foreach($studenti as $i => $student)
+{
+    $ime    = $student["ime"];
+    $prez   = $student["prezime"];
+    $adresa = $student["adresa"]["ulica"] . ' ' . 
+              $student["adresa"]["pbr"] . ' ' .
+              $student["adresa"]["grad"];
+    
+    echo '
+    <p>
+        <b>Ime:</b> '.$ime.'<br />
+        <b>Prezime:</b> '.$prez.'<br />
+        <b>Adresa:</b> '.$adresa.'<br />
+    </p>';
+}
+
+?>
+----------------------------------------------------------------
+
+<?php
+
+// studenti_tablica.php
+
+include("data.php");
+
+echo '
+<table border="1">
+    <thead>
+        <tr>
+            <th>Rbr</th>
+            <th>Ime</th>
+            <th>Prezime</th>
+            <th>Akcija</th>
+        </tr>
+    </thead>
+    <tbody>';
+
+    $rbr = 1;
+
+    foreach($studenti as $i => $student)
+    {
+        $ime    = $student["ime"];
+        $prez   = $student["prezime"];
+        
+        echo '
+        <tr>
+            <td>'.$rbr.'</td>
+            <td>'.$ime.'</td>
+            <td>'.$prez.'</td>
+            <td>
+                <a href="studenti_detalji.php?si='.$i.'">Detalji</a>
+            </td>
+        </tr>';
+
+        $rbr++;
+    }    
+        
+    echo '
+    </tbody>
+</table>';
+
+?>
+
+----------------------------------------------------------------------
+
+<?php
+
+// studenti_detalji.php
+
+include("data.php");
+
+$i = (int)$_GET["si"];
+
+$ime    = $studenti[$i]["ime"];
+$prez   = $studenti[$i]["prezime"];
+$adresa = $studenti[$i]["adresa"]["ulica"] . ' ' . 
+          $studenti[$i]["adresa"]["pbr"] . ' ' .
+          $studenti[$i]["adresa"]["grad"];
+
+echo '
+<p>
+    <b>Ime:</b> '.$ime.'<br />
+    <b>Prezime:</b> '.$prez.'<br />
+    <b>Adresa:</b> '.$adresa.'<br />
+</p>';
+
+?>
