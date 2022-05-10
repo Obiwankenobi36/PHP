@@ -1,0 +1,37 @@
+$title  = "Stranica 04";
+$naslov = 'Dobrodosli!';
+$poruka = 'Lorem ipsum ...';
+
+include("header.php");
+
+        echo '
+        <h1>'.$naslov.'</h1>
+        <p>';
+            
+        echo $poruka;
+        
+        echo '
+        </p>';
+
+include("footer.php");
+
+
+
+// header
+
+echo '
+<html>
+    <head>
+        <title>'.$title.'</title>
+    </head>
+    <body>';
+    
+    
+    
+    /*
+footer
+*/
+
+echo '
+</body>
+</html>';
