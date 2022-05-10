@@ -495,6 +495,202 @@ Funkcije
 
 
 
+function padajuci_izbornik()
+4. {
+5. echo '
+6. <select>
+7. <option value="">Odaberite</option>
+8. </select>';
+9. }
+10.
+11. /************************************************/
+12. // GLAVNI PROGRAM
+13.
+14. padajuci_izbornik();
+----------------------------------------------
+
+function padajuci_izbornik()
+4. {
+5. $html = '
+6. <select>
+7. <option value="">Odaberite</option>
+8. </select>';
+9.
+10. return $html;
+11. }
+12.
+13. /************************************************/
+14. // GLAVNI PROGRAM
+15.
+16. $v = padajuci_izbornik();
+17. echo $v;
+-------------------------------------------------
+
+function hr_mjesec()
+2. {
+3. $datum = "2014-11-05";
+4. $m = date("m", strtotime($datum));
+5.
+6. $mjesec_array = array("01" => "siječanj",
+7. "02" => "veljača", "03" => "ožujak",
+8. "04" => "travanj", "05" => "svibanj",
+9. "06" => "lipanj", "07" => "srpanj",
+10. "08" => "kolovoz", "09" => "rujan",
+11. "10" => "listopad", "11" => "studenti",
+12. "12" => "prosinac");
+13.
+14. $mjesec = $mjesec_array[$m];
+15.
+16. echo $mjesec;
+17. }
+18.
+19. hr_mjesec();
+-----------------------------------------------------
+
+Predaja parametra
+
+function hr_mjesec($datum)
+2. {
+3. $m = date("m", strtotime($datum));
+4.
+5. $mjesec_array = array("01" => "siječanj",
+6. "02" => "veljača", "03" => "ožujak",
+7. "04" => "travanj", "05" => "svibanj",
+8. "06" => "lipanj", "07" => "srpanj",
+9. "08" => "kolovoz", "09" => "rujan",
+10. "10" => "listopad", "11" => "studenti",
+11. "12" => "prosinac");
+12.
+13. $mjesec = $mjesec_array[$m];
+14.
+15. echo $mjesec;
+16. }
+17.
+18. hr_mjesec("2014-11-05");
+----------------------------------------------------
+
+Više parametara
+
+function sum($a, $b)
+4. {
+5. $c = $a + $b;
+6.
+7. return $c;
+8. }
+9.
+10. /**********************/
+11.
+12. $x = 1;
+13. $y = 10;
+14.
+15. $z = sum($x, $y);
+16.
+17. echo "Suma je: ".$z;
+----------------------------------------------------------
+
+Zadani parametar
+
+function sum($a, $b = 0)
+4. {
+5. $c = $a + $b;
+6.
+7. return $c;
+8. }
+9.
+10. /**********************/
+11.
+12. $x = 1;
+13. $y = 10;
+14.
+15. $z = sum($x);
+16.
+17. echo "Suma je: ".$z;
+--------------------------------------------------
+
+Varijabla van funkcije
+
+$a = 2;
+4.
+5. function inc_a()
+6. {
+7. $a++;
+8. echo $a;
+9. }
+10.
+11. inc_a();
+12. echo '<br />';
+13. echo $a;
+---------------------------------------------
+
+Varijabla van i unutar funkcije
+
+$a = 2;
+4.
+5. function inc_a()
+6. {
+7. global $a;
+8.
+9. $a++;
+10. echo $a;
+11. }
+12.
+13. inc_a();
+14. echo '<br />';
+15. echo $a;
+--------------------------------------------
+
+Zadržavanje vrijednosti varijable
+
+function inc_a()
+4. {
+5. static $a;
+6.
+7. $a++;
+8. echo $a;
+9. }
+---------------------------------------------
+
+Varijabilni broj argumenata
+
+function inc_a()
+4. {
+5. $polje_param = func_get_args();
+6.
+7. for($i=0; $i<count($polje_param); $i++)
+8. {
+9. echo 'P'.$i.' = '.$polje_param[$i];
+10. echo '<br />';
+11. }
+12. }
+13.
+14. inc_a(1, 'ime', 7, 'nesto', 'bla', 89);
+-----------------------------------------------
+
+Varijabilno ime funkcije
+
+function zbroj($a, $b)
+4. {
+5. return $a + $b;
+6. }
+7.
+8. $f = 'zbroj';
+9.
+10. echo call_user_func('zbroj', 50, 25);
+-----------------------------------------------
+
+Varijabilno ime funkcije (2)
+1. <?php
+2.
+3. function zbroj($a, $b)
+4. {
+5. return $a + $b;
+6. }
+7.
+8. $f = 'zbroj';
+9.
+10. echo $f(50, 25); -> echo zbroj(50, 25);
+
+
 
 
 
