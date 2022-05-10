@@ -1,0 +1,307 @@
+MOJE 
+
+<?php
+
+$filename = "imena.txt";
+
+$file_array = file($filename);
+
+if(is_array($file_array))
+{
+  $header_row_array = array();
+
+  foreach($file_array as $key => $line)
+  {
+    $line = trim($line, "\n");
+    $line = trim($line, "\r");
+
+    $line_array = explode(";", $line);
+
+    if($key == 0)
+    {
+      $header_row_array = $line_array;
+      unset($file_array[$key]);
+    }
+    else
+    {
+      $file_array[$key] = array_combine($header_row_array, $line_array);
+    }
+  }
+}
+
+
+Echo
+'
+<a href="unos.php">Dodaj novi unos</a>';
+
+
+echo '
+<table border="1">
+  <thead>
+    <tr>';
+    
+      if(is_array($header_row_array))
+      {
+        foreach($header_row_array as $key => $val)
+        {
+          echo '<th>'.$val.'</th>';
+        }
+      }      
+
+    echo '
+    </tr>
+  </thead>
+  <tbody>';
+
+      if(is_array($file_array))
+      {
+        foreach($file_array as $key => $row_array)
+        {
+          echo '
+          <tr>';
+          
+            if(is_array($row_array))
+            {
+              foreach($row_array as $k => $v)
+              {
+                echo '<td>'.$v.'</td>';
+              }
+            }            
+
+          echo '
+          </tr>';
+        }
+      }
+
+  echo '
+  </tbody>
+</table>';
+
+?>
+
+---------------------------------------------------------
+
+//form 
+
+<?php
+
+echo'
+<a href="tablica1.php">Natrag</a> <br><br>
+
+
+
+<form action="unos.php" method = "POST">
+  <label for="fname">Ime:</label> <br>
+  <input type="text" id="ime" name="ime"><br><br>
+  <label for="lname">Prezime:</label> <br>
+  <input type="text" id="prezime" name="prezime"><br><br>
+  <input type="submit" name="button1" value="Spremi">
+</form>
+
+';
+
+
+
+if (isset ($_POST["button1"]))
+{
+
+$ime = $_POST["ime"];
+$prezime = $_POST["prezime"];
+
+$filename = "imena.txt";
+
+$fp = fopen($filename, "a");
+$redak = $ime.';'. $prezime."\n" ;
+
+fwrite($fp, $redak);
+fclose($fp);
+}
+?>
+-------------------------------------------------------
+-------------------------------------------------------
+
+
+PROF
+
+
+<?php
+
+// tablica.php
+
+include("functions.php");
+
+$file_array = readCSV("data.txt");
+
+echo '
+<p>
+    <a href="form.php">Dodaj novi unos</a>
+</p>';
+
+echo '
+<table border="1">
+    <thead>
+        <tr>';
+
+            $row_array = end($file_array);
+
+            if(is_array($row_array))
+            {
+                foreach($row_array as $key => $val)
+                {
+                    echo '<th>'.$key.'</th>';
+                }
+            }                    
+
+        echo '
+        </tr>
+    </thead>
+    <tbody>';
+
+        if(is_array($file_array))
+        {
+            foreach($file_array as $key => $row_array)
+            {
+                echo '
+                <tr>';
+
+                    if(is_array($row_array))
+                    {
+                        foreach($row_array as $k => $v)
+                        {
+                            echo '<td>'.$v.'</td>';
+                        }  
+                    }                  
+
+                echo '
+                </tr>';
+            }
+        }
+
+    echo '
+    </tbody>
+</table>';
+
+?>
+
+---------------------------------------------
+
+<?php
+
+// form.php
+
+echo '
+<p>
+    <a href="tablica.php">Natrag</a>
+</p>';
+
+echo '
+<form method="POST" action="obrada.php">
+
+    Ime:<br />
+    <input type="text" name="ime" value="" /><br />
+
+    Prezime:<br />
+    <input type="text" name="prezime" value="" /><br /> 
+
+    <br />
+
+    <input type="submit" name="btn_save" value="Spremi" />
+
+</form>';
+
+?>
+-----------------------------------------------------
+
+<?php
+
+// functions.php
+
+function readCSV($filename)
+{
+    $file_array = file($filename);
+
+    if(is_array($file_array))
+    {
+        $header_row_array = array();
+
+        foreach($file_array as $key => $line)
+        {
+            $line = trim($line, "\n");
+            $line = trim($line, "\r");
+
+            $line_array = explode(";", $line);
+
+            if($key == 0)
+            {
+                $header_row_array = $line_array;
+                unset($file_array[$key]);
+            }
+            else
+            {
+                $file_array[$key] = array_combine($header_row_array, $line_array);
+            }
+        }
+    }
+
+    return $file_array;
+}
+
+function writeCSV($filename, $fdata)
+{
+    $txt_line = "";
+
+    if(is_array($fdata))
+    {
+       foreach($fdata as $key => $row_array)
+       {
+            $txt_line .= implode(";", $row_array) . "\n";
+       }
+    }
+
+    $fp = fopen($filename, "a+");
+
+    if(fwrite($fp, $txt_line))
+    {
+        fclose($fp);
+        return true;
+    }
+    else
+    {
+        fclose($fp);
+        return false;
+    }
+}
+
+?>
+
+------------------------------------------------------------------
+
+<?php
+
+// obrada.php
+
+include("functions.php");
+
+if(isset($_POST["btn_save"]))
+{
+    $ime     = $_POST["ime"];
+    $prezime = $_POST["prezime"]; 
+
+    $data = array();
+
+    $data[0]["Ime"]     = $ime;
+    $data[0]["Prezime"] = $prezime;
+
+    if(writeCSV("data.txt", $data))
+    {
+        header("Location: tablica.php");
+    }
+    else
+    {
+        echo 'Doslo je do greske, pokusajte ponovo <a href="form.php">Natrag</a>';
+    }
+}
+
+?>
+
+
