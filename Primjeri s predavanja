@@ -1,0 +1,232 @@
+<?php
+
+// datum.php
+
+$datum = "1999-12-31";
+$datum_ts = strtotime($datum);
+
+echo '
+<select name="dan">
+    <option value="">Odaberite:</option>';
+    
+    for($i=1; $i<=31; $i++)
+    {
+        if($i == date("j", $datum_ts))
+        {
+            $selected = 'selected="selected"';     
+        }
+        else
+        {
+            $selected = '';
+        }
+
+        echo '<option value="'.$i.'" '.$selected.'>'.$i.'</option>';
+    }
+
+echo '
+</select>';
+
+echo '
+<select name="mjesec">
+    <option value="">Odaberite:</option>';
+    
+    for($i=1; $i<=12; $i++)
+    {
+        if($i == date("n", $datum_ts))
+        {
+            $selected = 'selected="selected"';     
+        }
+        else
+        {
+            $selected = '';
+        }
+
+        echo '<option value="'.$i.'" '.$selected.'>'.$i.'</option>';
+    }
+
+echo '
+</select>';
+
+echo '
+<select name="godina">
+    <option value="">Odaberite:</option>';
+    
+    for($i=date("Y"); $i>=1900; $i--)
+    {
+        if($i == date("Y", $datum_ts))
+        {
+            $selected = 'selected="selected"';     
+        }
+        else
+        {
+            $selected = '';
+        }
+
+        echo '<option value="'.$i.'" '.$selected.'>'.$i.'</option>';
+    }
+
+echo '
+</select>';
+
+?>
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+
+
+
+<?php
+
+// Formular
+
+echo '
+<form method="POST" action="obrada.php">
+
+    Ime:<br />
+    <input type="text" name="ime" value="" /><br />
+
+    Prezime:<br />
+    <input type="text" name="prezime" value="" /><br />
+
+    <br />
+    <input type="submit" name="btn_save" value="Spremi" />
+
+</form>';
+
+?>
+
+-------------------------------------------------------------
+
+<?php
+
+// obrada.php
+
+if(isset($_POST["btn_save"]))
+{
+    $ime = $_POST["ime"];
+    $prezime = $_POST["prezime"];
+
+    $filename = "imena.csv";
+
+    $fp = fopen($filename, "a+");
+
+    $line = $ime . ";" . $prezime . "\n";
+
+    fwrite($fp, $line);
+
+    fclose($fp);
+}
+
+?>
+
+---------------------------------------------------------
+---------------------------------------------------------
+
+
+
+<?php
+
+// data.php
+
+$vijesti = array();
+
+$vijesti[1]["naslov"] = "Okusi djetinjstva: Alicu je kolač s jabukama i vrhnjem vratio u 1985.";
+$vijesti[1]["datum"]  = "2022-04-25";
+$vijesti[1]["kratka"] = "Svakog ponedjeljka donosimo vam recept za jela i kolače koji podsjećaju na djetinjstvo. Bilo da su u izvornom obliku ili u modernijoj varijanti, vjerujemo da će vam se svidjeti toliko da ih odmah poželite spremiti. A nadamo se i da ćemo vam barem malo uljepšati ponedjeljak.";
+$vijesti[1]["duga"]   = "PRVI na redu je recept Alice Bjeli Duduković, čiji vas je kuglof od mrkve i sira oduševio prije koji tjedan pa ne sumnjamo da će tako biti i s ovim mini pitama. Kaže kako joj je ovaj recept prvi pao na pamet kad su u pitanju okusi djetinjstva jer je njena mama često radila kolače od jabuka i oraha. Osim toga, ovaj mi se kolač urezao u pamćenje i zato što je recept iz 1985. godine, a upravo sam te godine kretala u školu, kaže nam Alica. Recept s točnim količinama sastojaka i koracima pripreme pronađite OVDJE.";
+
+$vijesti[2]["naslov"] = "Vučeno tijesto nije nikakav bauk, imamo provjereni recept koji svima uspijeva";
+$vijesti[2]["datum"]  = "2022-04-25";
+$vijesti[2]["kratka"] = "DANAS ne pričamo o ispravnim nazivima za burek, već o samom načinu pripreme vučenog tijesta. Što je zapravo potrebno za domaći burek/pitu? Tek par stvari: brašno i voda, radna površina, stolnjak, valjak za tijesto i bonus sastojak - malo ili malo više strpljenja!";
+$vijesti[2]["duga"]   = "Njihove verzije su uvijek bile slatke, nadjevene jabukama ili višnjama, i više su naginjale nama dobro poznatim štrudlama/savijačama u duguljastom obliku, a ja sam htjela smotani burek u obliku puža. I tako sam krenula istraživati po bakinim kuharicama i internetu i nakon niza propalih pokušaja napravila svoj prvi burek! Godinama nakon prvog uspješnog pokušaja rado napravim i slatke varijante, kojima su me podučile mama i baka.";
+
+$vijesti[3]["naslov"] = "Idemo po dućanima: Zvijezde tjedna su novi, ali i dobri stari sladoledi";
+$vijesti[3]["datum"]  = "2022-04-25";
+$vijesti[3]["kratka"] = "NA INDEX RECEPTIMA smo u svakodnevnoj potrazi za novim, zanimljivim i neobičnim proizvodima koji se mogu pronaći u našim dućanima. Evo što smo pronašli ovaj tjedan.";
+$vijesti[3]["duga"]   = "NA INDEX RECEPTIMA smo u svakodnevnoj potrazi za novim, zanimljivim i neobičnim proizvodima koji se mogu pronaći u našim dućanima. Evo što smo pronašli ovaj tjedan. Našli smo pakiranje Snjeguljica u kojem je 6 komada, u Kauflandu košta 27 kuna";
+
+
+?>
+
+--------------------------------------------------------------------------
+
+<?php
+
+// vijesti.php
+
+include("data.php");
+
+if(is_array($vijesti))
+{
+    foreach($vijesti as $key => $vijest)
+    {
+        echo '<h1>' . $vijest["naslov"] . '</h1>';
+        echo '<i>' . date("d.m.Y", strtotime($vijest["datum"])) . '</i>';
+        echo '<p>' . $vijest["kratka"] . '</p>';
+        echo '<p><a href="vise.php?k='.$key.'">VISE</a></p>';
+    }
+}
+
+?>
+-----------------------------------------------------------------------------
+
+<?php
+
+// vise.php
+
+include("data.php");
+
+if(isset($_GET["k"]))
+{
+    $k = $_GET["k"];
+
+    $vijest = $vijesti[$k];
+
+    echo '<h1>' . $vijest["naslov"] . '</h1>';
+    echo '<i>' . date("d.m.Y", strtotime($vijest["datum"])) . '</i>';
+    echo '<p>' . $vijest["duga"] . '</p>';    
+}
+
+?>
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+<?php
+
+// upload_csv.php
+
+echo '
+<form method="POST" action="" enctype="multipart/form-data">
+
+    <input type="file" name="datoteka" value="" />
+    <input type="submit" name="btn_upload" value="Upload" />
+
+</form>';
+
+if(isset($_POST["btn_upload"]))
+{
+    $name     = $_FILES["datoteka"]["name"];
+    $type     = $_FILES["datoteka"]["type"];
+    $tmp_name = $_FILES["datoteka"]["tmp_name"];
+    $error    = $_FILES["datoteka"]["error"];
+    $size     = $_FILES["datoteka"]["size"];
+
+    $path = "UPLOADS/";
+
+    $new_name = $path . $name; 
+
+    if(move_uploaded_file($tmp_name, $new_name))
+    {
+        echo "DATOEKA JE SPREMLJENA";
+    }
+    else
+    {
+        echo "PROBLEM KOD SPREMANJA DATOTEKE";
+    }
+}
+
+?>
+
+
+
+
