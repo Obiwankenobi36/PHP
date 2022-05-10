@@ -693,6 +693,42 @@ Varijabilno ime funkcije (2)
 
 
 
+Get - iz urla
+Post - iz formulara
+Fp - file pointer
 
+Post kupi name i ono postaje kljuc a vrijednosti su ovo sto korisnik upise
+
+Array combine (polje s kljucevima, poslje s vrijednostima)
+
+Funkcija ne bi trebala raditi echo, vec return 
+
+Zadani paramerar, b=0, on nije nigdje potreban ali ako ga negdje stavimo on ce prec preko njega i napisat novu vrijednost 
+
+Paziti na globalne i varijable funkcija
+
+Kod svakog poziva se brise sve iz funkcije (sve varijable) i krece iz pocetka sve 
+
+Array combine - iz prvog polja uzme vrijednosti koje postanu kljucevi, a iz drugog uzme vrijednosti koje postaju vrijednosti u novom polju
+
+Treba funkciji predat input (bolje nego fiksni input) -> funkcija(input) 
+
+Current(ime polja) - izvlaci prvi element polja 
+End?(ime polja) - izvlaci zadnji element polja 
+
+U formu method = "POST" da moze varijabla $_POST ["name inputa"] pokupit iz nje podatke (slika) 
+
+Header funkcija radi samo ako prije nje nema ni jedan echo, sluzi za to da redirektiramo korisnika na određenu stranicu 
+
+
+Funkcije za sortiranje polja za ove datume
+
+Strtotime radi timestamp od bilo kojeg datuma 
+
+Value - prikazuje sto ce pisati u buttonu ako je button 
+
+Global - vuce varijable iz glavnog dijela u funkciju i nju ne modificirat unutar funkcije, da bude samo za citanje 
+
+Varibla .= konkatiniranje u varijablu 
 
 
