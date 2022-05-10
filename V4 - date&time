@@ -1,0 +1,200 @@
+<?php
+
+// date02.php
+
+$t = 1348633409;
+
+$d = date("d.m.Y. H:i:s", $t);
+
+echo $d;
+
+?>
+
+
+
+
+// date03.php
+
+$date = "2022-03-30";
+
+$t = strtotime($date);
+
+$t += 78 * 24 * 60 * 60;
+
+echo date("l, d.m.Y.", $t);
+
+
+
+// date04.php
+
+$date_from = "2028-02-01";
+$date_to = date("Y-m-t", strtotime($date_from));
+
+echo $date_from . " - " . $date_to;
+
+--------------------------------------------------------
+
+// zad01.php
+
+// 2022-03-30 -> Srijeda, 30.3.2022.
+
+$datum = "2022-03-30";
+
+$t = strtotime($datum);
+
+$d = date("j", $t);
+$m = date("n", $t);
+$y = date("Y", $t);
+
+$dan_u_tj = date("N", $t);
+
+switch($dan_u_tj)
+{
+  case '1':
+    $dan_ime = 'Ponedjeljak';
+  break;
+
+  case '2':
+    $dan_ime = 'Utorak';
+  break;  
+
+  case '3':
+    $dan_ime = 'Srijeda';
+  break;  
+
+  case '4':
+    $dan_ime = 'Cetvrtak';
+  break; 
+  
+  case '5':
+    $dan_ime = 'Petak';
+  break;  
+
+  case '6':
+    $dan_ime = 'Subota';
+  break;
+  
+  case '7':
+    $dan_ime = 'Nedjelja';
+  break;
+
+  default:
+    $dan_ime = 'Nepoznat';
+}
+
+$datum_new = $dan_ime . ', ' . $d . '.' . $m . '.' . $y . '.';
+
+echo $datum_new;
+
+
+--------------------------------------------------------------
+
+<?php
+
+// zad02.php
+
+// 2022-03-30 -> Srijeda, 30. ozujak 2022.
+
+$datum = "2022-03-30";
+
+$t = strtotime($datum);
+
+$d = date("d", $t);
+$m = date("m", $t);
+$y = date("Y", $t);
+
+$dan_u_tj = date("N", $t);
+
+switch($dan_u_tj)
+{
+    case '1':
+        $dan_ime = 'Ponedjeljak';
+    break;
+
+    case '2':
+        $dan_ime = 'Utorak';
+    break;
+    
+    case '3':
+        $dan_ime = 'Srijeda';
+    break;
+    
+    case '4':
+        $dan_ime = 'Cetvrtak';
+    break;
+    
+    case '5':
+        $dan_ime = 'Petak';
+    break;
+    
+    case '6':
+        $dan_ime = 'Subota';
+    break;
+    
+    case '7':
+        $dan_ime = 'Nedjelja';
+    break;    
+
+    default:
+        $dan_ime = 'Nepoznat';
+}
+
+switch($m)
+{
+    case '01':
+        $mj_ime = 'sijecanj';
+    break;
+
+    case '02':
+        $mj_ime = 'veljaca';
+    break;
+
+    case '03':
+        $mj_ime = 'ozujak';
+    break;
+
+    case '04':
+        $mj_ime = 'travanj';
+    break;
+
+    case '05':
+        $mj_ime = 'svibanj';
+    break;
+
+    case '06':
+        $mj_ime = 'lipanj';
+    break;
+
+    case '07':
+        $mj_ime = 'srpanj';
+    break;
+
+    case '08':
+        $mj_ime = 'kolovoz';
+    break;
+
+    case '09':
+        $mj_ime = 'rujan';
+    break;
+
+    case '10':
+        $mj_ime = 'listopad';
+    break;
+
+    case '11':
+        $mj_ime = 'studeni';
+    break;
+
+    case '12':
+        $mj_ime = 'prosinac';
+    break;
+
+    default:
+        $mj_ime = '';
+}
+
+$datum_new = $dan_ime . ', ' . $d . '.' . $mj_ime . ' ' . $y . '.';
+
+echo $datum_new;
+
+?>
