@@ -1,0 +1,169 @@
+silence na djelove koji su nepotrebni
+cut i paste dijelove da ih poredas
+ujednacis glasnocu tako da ides na effects i normalize to 0.1dB ako se ne varam
+ ocistis od huma tako da koristis onaj effect, moram pogledat kako se tocno zove al moguce da nesto kao dehummer
+ boju glasa mijenjas pomocu EQ 30 bands
+prostor je studio reverb ako se ne varam i imas onda samo preset lecture hall
+ i na kraju jos jedanput napravis normalize to 0.1dB
+
+Poravnat kanale 
+Prvo smanjit broj kanala- grupirat ih da je lakse operirat s njima 
+
+Ritam sekcija bubanj i bas gitara 
+
+Sve ulaze na tracksove na none 
+
+Multitrack-> tracks-> add stereo bus track (naziv: ritam)
+Onda sve tracksove koji idu tamo (noga, dobosz, claps...) saljemo u ritam bus
+Jos jedna sekcija za gitaru 
+
+Panoramu radit (na mono signalu) - to su mali kruzici (ovi donji) kojima mozemo povuc da idu desno ili lijevo instrumenti 
+
+
+
+
+
+PARALELNO SLANJE I BUS SA EFEKTIMA 
+Reverb primjenit na vox reverb novi bus koji je kanal s reverbom 
+
+Pralelno slanje - treba glavni vokal paralelno poslat u vox reverb (onaj srednji prozor di pise none - to je send) i onda ga tamo saljemo i vraca se on sam 
+
+Ima mali kruzic iznad senda di je mozda beskonacnost- to na 0 stavit -> kolka je jacina signala koji se salje 
+
+A kruzic ispod je za L i R koji se salje i to pomalnut u backvokalima kolko su u orginalu oni pomaknuti 
+
+Poslat u vox reverb backvokale 1 i 2 i vokal 
+
+Taj vox reverb mora ic (out) u grupu vokali 
+Pazit da ima 16 sendova pa da vidimo di smo 
+
+PANORAME
+Vokal noga dobosz clap i sve sto nije spomenuto ispod ovdje  - centar 
+
+Hi hat povukli desno malo 
+
+Bubanj L - 40 lijevo 
+Bubanj R - 40 desno 
+
+Gitara 1 mono na stranu (desno 25) 
+Gitara 2 stereo L - R 10
+                           R - R 40
+S - gumb za izolirat track za slusanje 
+
+Uvod L - L100
+Uvod R - R100
+Bekovi HI- L30
+Bekovi LO- R30
+
+
+
+
+Fx - insertiranje efekata 
+U pauzi ne mozemo radit nista, stop mora bit 
+
+Promjena faze
+Bubanj L - promjena faze 
+Guitar 2 L - promjena faze 
+Dobis visoki (gornji) - promjena faze
+
+
+Ciscenje
+Dobosz 1 od kicka treba ocistit - waveform editor -> effects - amplitude - dynamic - na amplitude - trashold - -16dB
+I pazi na kick mali između (ima ih 2) - ono malo brdasce prije nego krene udarat, znaci na njega ne primjenit kad oznacavamo
+I silence na pocetku napravit do pocetka 
+
+Kick 1 i kick2  - malo na pocetku u kraju silence
+Hi hat - u sredini di ne svira i na kraju silence i graphic eq sve smanjit od 0 do 200 frekv i to za - 20ak dB negdje 
+
+Bubanj L i R - u pauzi neki mali dodir silencat 
+
+
+MI1 - spusto je na ovom drugom mutnom dijelu dynamic range frekvencije 800-4k
+
+
+Ciscenje vokala - pocetak sredina kraj
+
+
+Dodavanje efekta 
+
+Mono gitara 
+(Mora bit fx opcij od one 4 gore lijevo iznad kanala svih) na plug in strelica -  delay and echo - analog delay - 
+
+
+
+
+Echo/delay na vokalu (vox) tamo negdje na sredini na rijeci "heart" i "(bea)ted" - kopirat dio di su te rijeci i prebacit ih na novi track samo za to (multitracks - new mono track) i nju desni klik i convert to unique copy i onda tamo applyat echo dolje (insertirat ga- znaci stisnemo gore na fx od ona 4  i onda ubacit dolje u jedan od "uticnica" echo - ima 3 lomponente - povecat delay time 580, feedback - malo manji (tu negdje je na razini delaya) i ovo trece skoro na 100%) a gore silencat na orginalu taj dio 
+
+
+Stavit taj novi vox echo u grupu vokali 
+
+Stvorit vox echo bus (i on ide u vokali i ide na send u reverb grupu) i iz vox echo onaj send na njega poslat 
+
+Na vox echo bus napravit stereo echo (a u vox echo smo iskljucili efekt), delay je 580 a desni je 1260 i treba jos iskljucit na vox echo onaj mali crveni 1* kao da se ne dupla signal  
+
+
+Save
+File - export - multitrack mixdown - entire session - spremit u folder di je sam session,
+24 bitno, 48000z stereo 
+
+Poglasnit sve - mastering faza
+(ne ovo radit) 
+
+Effects-amplitude-hardlimiter -> preset - default,  prva opcija -0.1dB
+Moze i preset koji je hard limit at -0.1dB i onda podic onaj bus na 12dB 
+
+Effects-special-Mastering 
+
+Effects- rack effect- loudness radar 
+
+Novi track - matrica (ona ide u mix naravno) - sve sto nije vokal stavit ne da vise ide u mix nego u matricu 
+
+
+I na matricu stavit mastering effect sa presetom make room for voclas
+
+
+
+
+
+---------
+
+Novi multitrack i onda tamo postavke stavit 
+-Pazit ime
+-Na desktop 
+-sample rate 
+-bit rate
+
+*SPREMIT U FOLDER KOJI AUDITION NAPRAVI OVAJ FOLDER STO DOBIJEMO ZA OBRAĐIVAT*
+
+
+Uvedemo i imenujemo kanale 
+Ociatit od nezeljenog sadrzaja
+U gitari - "moze"
+
+
+Zasebna sina za efekt samo - putem sendova slat 
+Dry i wet signal pomicat - wet na 100% 
+Ali ako stavljamo efekt direkt na bus sa instrumentima onda dozirat dry i wet
+Efekt isto u grupu slat a ne u master
+Na doboszu visokom neki eq 
+
+
+Delay na vokalu - ono s onim kopiranjem 
+
+
+U matricu ide sve osim vokala - ima preset make room vocal 
+
+Spremit mix di nam je foldet sa sessionom 
+48khz? Uglavnom pomaknut parametre
+
+Promijenit sample rate i bit depth ako trebamo za copact disk 
+
+Uzet taj mixdown u multitrack i onda save as i tu promjenit postavke - 44.100khz 16b 
+
+
+
+Effects - special - loudness radar metar (-14lufs) 
+S time mjerimo i onda podesavamo loudness
+
+
+
