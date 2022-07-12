@@ -1,0 +1,173 @@
+ Napisati PHP skriptu ulaznice.php unutar koje treba
+implementirati klasu Ulaznice
+2. Klasa mora sadržavati pripadajući konstruktor i metodu
+Rezerviraj()
+3. Klasa mora sadržavati atribut $rezervacijeArray
+4. Unutar PHP skripte ulaznice.php implementirati na dnu i
+programski kod koji radi s klasom i HTML formu
+Zadatak za vježbu - 15. HTML forma mora sadržavati tri tekstualna polja za upis broja
+ulaznice, ime i prezime posjetitelja i submit gumb
+6. Metoda klase Rezerviraj() služi za zapisivanje podataka o
+rezervaciji ulaznica u CSV datoteku koja se zove
+rezervacije.csv i koja ima zaglavlje sljedećeg tipa:
+BrUlaznice;Ime;Prezime
+Zadatak za vježbu - 17. Programski kod na dnu skripte koji radi s HTML formom mora
+prihvatiti iz POST varijable upisane podatke iz tekstualnih
+formi i pomoću metode Rezerviraj() zapisati u CSV datoteku
+8. Prilikom izrade klase Ulaznice koristiti Singleton oblikovni
+obrazac (pattern)
+
+<?php
+
+// Menu.php
+
+class Menu
+{
+    public $name;
+    protected $menu = array();
+    private static $instance;
+
+    public function __construct()
+    {
+        $this->setMenu();
+    }
+
+    public function getMenu()
+    {
+        return $this->menu;
+    }
+
+    protected function setMenu()
+    {
+        $file_csv = file("menu.csv");
+
+        if(is_array($file_csv))
+        {
+            foreach($file_csv as $key => $line)
+            {
+                $line = trim($line, " \n");
+                $line = trim($line, " \r");  
+
+                $line_array = explode(";", $line);
+
+                $topmenu = $line_array[0];
+
+                if(isset($line_array[1]))
+                {
+                    $submenu = $line_array[1];
+                }
+                else
+                {
+                    $submenu = null;
+                }  
+                
+                if($submenu)
+                {
+                    $this->menu[$topmenu][] = $submenu;
+                }
+                else
+                {
+                    $this->menu[$topmenu] = $submenu;
+                }                
+            }
+        }
+    }
+
+    public static function getInstance()
+    {
+        if(!isset(self::$instance))
+        {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+}
+
+?>
+----------------------------------------------------------
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+        
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>        
+        
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>    
+    </head>
+    <body>
+
+    <?php
+
+      include("Menu.php");
+
+      $menu = Menu::getInstance();
+      $menu->name = "topmenu";
+      echo $menu->name;
+
+      $menu_array = $menu->getMenu();
+
+      if(is_array($menu_array))
+      {
+        echo '
+        <ul class="nav nav-tabs">';
+
+          foreach($menu_array as $topmenu => $submenu_array)
+          {
+            if(is_array($submenu_array))
+            {
+              echo '
+              <li role="presentation" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                  '.$topmenu.' <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">';
+
+                  foreach($submenu_array as $key => $submenu)
+                  {
+                    echo '<li><a href="#">'.$submenu.'</a></li>';
+                  }
+
+                echo '
+                </ul>
+              </li>';
+            }
+            else
+            {
+                echo '
+                <li role="presentation"><a href="#">'.$topmenu.'</a></li>';
+            }
+          }
+
+        echo '
+        </ul>';
+      }
+
+
+      $m = Menu::getInstance();
+      echo $m->name;
+
+    ?>  
+    
+    </body>
+</html>
+------------------------------------
+
+Naslovnica
+O nama
+Kontakt
+Ponuda;Matične ploče
+Ponuda;Procesori
+Ponuda;Memorija
+Ponuda;Tvrdi disk
+Ponuda;Grafička kartica
+
+
