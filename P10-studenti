@@ -1,0 +1,200 @@
+Prepisivanje metoda roditelj klase
+1. class Ucenik extends Student
+2. {
+3. function getBrGod()
+4. {
+5. $godine = parent::getBrGod();         Poziv roditelj
+6.
+7. return $godine." godina";
+8. }
+9. function getMbr()
+10. {
+11. $m1 = substr($this->ime, 0, 1);
+12. $m2 = substr($this->prez, 0, 1);
+13. $m3 = date("dmy", strtotime($this->datRod));
+14. $m4 = parent::getBrGod();
+15.
+16. return $m1.$m2.$m3.$m4;
+17. }
+18. }
+
+------------------------------
+Provjera tko je roditelj klase
+1. $cParents = class_parents('Ucenik');
+2.
+3. if(in_array('Student', $cParents))
+4. {
+5. $ucenik123 = new Ucenik("Petar", "Petric", "2000-10-13");
+6. echo $ucenik123->getBrGod();
+7. }
+
+
+---------------------------------------------
+<?php
+
+// Studenti.php
+
+class Studenti
+{
+    private $studenti = array();
+
+    function __construct()
+    {
+        $this->Ucitaj();
+    }
+
+    function Ucitaj()
+    {
+        $file = "studenti.csv";
+
+        $file_array = file($file);
+
+        if(is_array($file_array))
+        {
+            foreach($file_array as $key => $line)
+            {
+                if($key > 0)
+                {
+                    $line = trim($line, "\n");
+                    $line = trim($line, "\r");
+    
+                    $line_array = explode(";", $line);
+
+                    $student = new Student($line_array[0], $line_array[1], $line_array[2]);
+
+                    $this->studenti[] = $student;
+                }
+            }
+        }
+    }
+
+    function getNajstariji()
+    {
+        $najstariji = new Student();
+        $najstariji = $this->studenti[0];
+
+        foreach($this->studenti as $key => $student)
+        {
+            if($student->Starost() > $najstariji->Starost())
+            {
+                $najstariji = $student;
+            }
+        }
+
+        return $najstariji;
+    }
+
+    function getNajmladji()
+    {
+        $najmladji = new Student();
+        $najmladji = $this->studenti[0];
+
+        foreach($this->studenti as $key => $student)
+        {
+            if($student->Starost() < $najmladji->Starost())
+            {
+                $najmladji = $student;
+            }
+        }
+
+        return $najmladji;
+    }    
+}
+
+?>
+-------------------------------------------
+<?php
+
+// Student.php
+
+class Student
+{
+    private $ime;
+    private $prezime;
+    private $datum_rod;
+
+    function __construct($i = null, $p = null, $d = null)
+    {
+        $this->setIme($i);
+        $this->setPrezime($p);
+        $this->setDatumRod($d);
+    }
+
+    function getIme()
+    {
+        return $this->ime;
+    }
+
+    function setIme($param)
+    {
+        $this->ime = $param;
+    }
+
+    function getPrezime()
+    {
+        return $this->prezime;
+    }
+
+    function setPrezime($param)
+    {
+        $this->prezime = $param;
+    }
+
+    function getDatumRod()
+    {
+        return $this->datum_rod;
+    }
+
+    function setDatumRod($param)
+    {
+        $this->datum_rod = $param;
+    }
+
+    function Starost()
+    {
+        if($this->datum_rod != "")
+        {
+            $datum1 = new DateTime($this->datum_rod);
+            $datum2 = new DateTime();
+            $interval = $datum1->diff($datum2);
+            return $interval->format("%a");
+        }
+        else
+        {
+            return 0;
+        }
+    }
+}
+
+?>
+-------------------------------------------------
+<?php
+
+// index.php
+
+include("Student.php");
+include("Studenti.php");
+
+$studenti = new Studenti();
+
+$student_najstariji = $studenti->getNajstariji();
+$student_najmladji = $studenti->getNajmladji();
+
+// HTML
+echo '
+<h1>Najstariji student:</h1>
+<p>
+    <b>Ime:</b> '.$student_najstariji->getIme().'
+    <b>Prezime: </b> '.$student_najstariji->getPrezime().'
+</p>';
+
+// HTML
+echo '
+<h1>Najmladji student:</h1>
+<p>
+    <b>Ime:</b> '.$student_najmladji->getIme().'
+    <b>Prezime: </b> '.$student_najmladji->getPrezime().'
+</p>';
+
+?>
+---------------------------------------------------
