@@ -1,0 +1,92 @@
+<?php
+
+// index.php
+
+include("Proizvod.php");
+include("DrugiProizvod.php");
+
+$proizvod = new DrugiProizvod("Marker", 10.99, 1);
+
+$proizvod->id = 100;
+
+echo '<b>ID:</b> ' . $proizvod->id . '<br />';
+echo '<b>Naslov:</b> ' . $proizvod->getNaziv() . '<br />';
+echo '<b>Cijena:</b> ' . $proizvod->getCijena() . 'kn<br />';
+
+?>
+
+--------------------------------------------
+<?php
+
+// Proizvod.php
+
+class Proizvod
+{
+    public $id;
+    protected $naziv;
+    protected $cijena;
+    private $volumen;
+
+    function __construct($n, $c, $v)
+    {
+        $this->setNaziv($n);
+        $this->setCijena($c);
+        $this->setVolumen($v);
+    }
+
+    public function getNaziv()
+    {
+        return $this->naziv;
+    }
+
+    protected function setNaziv($param)
+    {
+        if(strlen($param) > 20)
+        {
+            return false;
+        }
+
+        $this->naziv = $param;
+        return true;
+    }
+
+    public function getCijena()
+    {
+        return $this->cijena;
+    }
+
+    protected function setCijena($param)
+    {
+        if($param <= 0)
+        {
+            return false;
+        }
+
+        $this->cijena = $param;
+        return true;
+    }
+
+    private function getVolumen()
+    {
+        return $this->volumen;
+    }
+
+    private function setVolumen($param)
+    {
+        $this->volumen = $param;
+        return true;
+    }
+}
+
+?>
+----------------------------------------------
+<?php
+
+// DrugiProizvod.php
+
+class DrugiProizvod extends Proizvod
+{
+
+}
+
+?>
