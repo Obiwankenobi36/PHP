@@ -1,0 +1,164 @@
+<?php
+
+// Master.php
+
+abstract class Master
+{
+  abstract function getTitle();
+  abstract function getContent();
+}
+
+?>
+
+--------------------------------------
+
+<?php
+
+// index.php
+
+include("autoload.php");
+
+if(isset($_GET["what"]) && $_GET["what"] != "")
+{
+  $class = $_GET["what"];
+}
+else
+{
+  $class = "News";
+}
+
+$class_parents = class_parents($class);
+
+if(in_array("Master", $class_parents))
+{
+  $obj = new $class();
+
+  $title = $obj->getTitle();
+  $content = $obj->getContent();
+}
+else
+{
+  die("Klasa " . $class . " ne nasljedjuje klasu Master!!!");
+}
+
+echo '<!doctype html>
+<html>
+  <head>
+    <title>'.$title.'</title>
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="index.php">Home</a></li>
+        <li><a href="index.php?what=News">News</a></li>
+        <li><a href="index.php?what=Contact">Contact</a></li>
+        <li><a href="index.php?what=Gallery">Gallery</a></li>
+        <li><a href="index.php?what=About">About</a></li>
+      </ul>
+    </nav>
+
+    <h1>'.$title.'</h1>
+
+    <p>'.$content.'</p>
+  </body>
+</html>';
+
+?>
+--------------------------------------------------------------
+
+<?php
+
+// autoload.php
+
+spl_autoload_register(function($className){
+
+  $filename = "inc/".$className.".php";
+
+  if(file_exists($filename))
+  {
+    include($filename);
+  }
+  else
+  {
+    include($className.".php");
+  } 
+});
+
+?>
+-----------------------------------------------------
+<?php
+
+// About.php
+
+class About extends Master
+{
+  function getTitle()
+  {
+    return "O nama";
+  }
+
+  function getContent()
+  {
+    return "Ovo je tekst o nama";
+  }
+}
+
+?>
+-----------------------------------------------------
+<?php
+
+// Contact.php
+
+class Contact extends Master
+{
+  function getTitle()
+  {
+    return "Kontakti";
+  }
+
+  function getContent()
+  {
+    return "Popis svih kontakata";
+  }
+}
+
+?>
+------------------------------------
+<?php
+
+// Gallery.php
+
+class Gallery extends Master
+{
+  function getTitle()
+  {
+    return "Galerija slika";
+  }
+
+  function getContent()
+  {
+    return "Lorem ipsum";
+  }
+}
+
+?>
+---------------------------------------
+<?php
+
+// News.php
+
+class News extends Master
+{
+  function getTitle()
+  {
+    return "Prikaz novih vijesti";
+  }
+
+  function getContent()
+  {
+    return "Sadrzaj svih vijesti";
+  }
+}
+
+?>
+
