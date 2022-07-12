@@ -1,0 +1,70 @@
+<?php
+
+// Vrijeme.php
+
+class Vrijeme
+{
+  private $GradIme;
+  private $GradoviVrijeme = array();
+
+  function __construct($lokacija)
+  {
+    $this->GradIme = $lokacija;
+
+    $this->prepareData();
+  }
+
+  function prepareData()
+  {
+    $url = "https://vrijeme.hr/hrvatska_n.xml";
+
+    $xmlstring = file_get_contents($url);
+
+    $xml = simplexml_load_string($xmlstring, "SimpleXMLElement", LIBXML_NOCDATA);
+
+    $json = json_encode($xml);
+    $array = json_decode($json, true);
+
+    if(is_array($array))
+    {
+      $DatumTermin = $array["DatumTermin"];
+      $Gradovi     = $array["Grad"];
+
+      foreach($Gradovi as $key => $Grad)
+      {
+        $GradIme = $Grad["GradIme"];
+        $Temp    = $Grad["Podatci"]["Temp"];
+
+        $this->GradoviVrijeme[$GradIme]["Temp"] = $Temp;
+      }
+    }
+  }
+
+  function getTemp()
+  {
+    if(isset($this->GradoviVrijeme[$this->GradIme]))
+    {
+      return $this->GradoviVrijeme[$this->GradIme]["Temp"];
+    }
+
+    return false;
+  }
+}
+
+?>
+-----------------------------------------------------
+<?php
+
+// index.php
+
+include("Vrijeme.php");
+
+$vrijeme = new Vrijeme("Zagreb-Maksimir");
+
+$vrijeme_du = new Vrijeme("Dubrovnik");
+
+echo 'Zagreb: ' . $vrijeme->getTemp() . ' C<br />';
+
+echo 'Dubrovnik: ' . $vrijeme_du->getTemp() . ' C<br />';
+
+?>
