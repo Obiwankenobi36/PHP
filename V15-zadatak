@@ -1,1 +1,179 @@
+ Napisati PHP skriptu ulaznice.php unutar koje treba
+implementirati klasu Ulaznice
+2. Klasa mora sadržavati pripadajući konstruktor i metodu
+Rezerviraj()
+3. Klasa mora sadržavati atribut $rezervacijeArray
+4. Unutar PHP skripte ulaznice.php implementirati na dnu i
+programski kod koji radi s klasom i HTML formu
+Zadatak za vježbu - 15. HTML forma mora sadržavati tri tekstualna polja za upis broja
+ulaznice, ime i prezime posjetitelja i submit gumb
+6. Metoda klase Rezerviraj() služi za zapisivanje podataka o
+rezervaciji ulaznica u CSV datoteku koja se zove
+rezervacije.csv i koja ima zaglavlje sljedećeg tipa:
+BrUlaznice;Ime;Prezime
+Zadatak za vježbu - 17. Programski kod na dnu skripte koji radi s HTML formom mora
+prihvatiti iz POST varijable upisane podatke iz tekstualnih
+formi i pomoću metode Rezerviraj() zapisati u CSV datoteku
+8. Prilikom izrade klase Ulaznice koristiti Singleton oblikovni
+obrazac (pattern)
+
+
+
+
+<?php
+
+// Ulaznica.php
+
+class Ulaznica
+{
+    protected $broj;
+    protected $ime;
+    protected $prezime;
+
+    public function __construct($b, $i, $p)
+    {
+        $this->setBroj($b);
+        $this->setIme($i);
+        $this->setPrezime($p);
+    }
+
+    public function getBroj()
+    {
+        return $this->broj;
+    }
+
+    protected function setBroj($param)
+    {
+        $this->broj = $param; 
+    }
+
+    public function getIme()
+    {
+        return $this->ime;
+    }
+
+    protected function setIme($param)
+    {
+        $this->ime = $param; 
+    }
+
+    public function getPrezime()
+    {
+        return $this->prezime;
+    }
+
+    protected function setPrezime($param)
+    {
+        $this->prezime = $param; 
+    }
+}
+
+?>
+---------------------------------------------
+<?php
+
+// Ulaznice.php
+
+class Ulaznice
+{
+    protected $rezervacijeArray = array();
+    private static $instance;
+
+    public function __construct()
+    {
+
+    }
+
+    public static function getInstance()
+    {
+        if(!self::$instance)
+        {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    public function Rezerviraj($b, $i, $p)
+    {
+        $ulaznica = new Ulaznica($b, $i, $p);
+
+        $this->setRezervacija($ulaznica);
+
+        $this->writeCSV($ulaznica);
+    }
+
+    protected function writeCSV($ulaznica)
+    {
+        $fp = fopen("rezervacije.csv", "a+");
+        $line = $ulaznica->getBroj() . ";" . $ulaznica->getIme() . ";" . $ulaznica->getPrezime() . "\n"; 
+        fwrite($fp, $line);
+        fclose($fp);
+    }
+
+    public function getRezrvacije()
+    {
+        return $this->rezervacijeArray;
+    }
+
+    protected function setRezervacija($param)
+    {
+        $this->rezervacijeArray[] = $param;
+    }
+}
+
+?>
+------------------------------------------------------
+<?php
+
+// index.php
+
+include("autoload.php");
+
+if(isset($_POST["btn_send"]))
+{
+    $b = (int)$_POST["broj"];
+    $i = $_POST["ime"];
+    $p = $_POST["prezime"];
+
+    $ulazniceMgr = Ulaznice::getInstance();
+
+    $ulazniceMgr->Rezerviraj($b, $i, $p);
+}
+
+echo '
+<form method="POST" action="">
+
+    Broj ulaznice:<br />
+    <input type="text" name="broj" value="" /><br />
+
+    Ime:<br />
+    <input type="text" name="ime" value="" /><br />
+
+    Prezime:<br />
+    <input type="text" name="prezime" value="" /><br />  
+    
+    <br />
+    <button type="submit" name="btn_send">Pošalji</button>
+
+</form>';
+
+?>
+----------------------------------------
+
+<?php
+
+// autoload.php
+
+function include_class($class)
+{
+    include($class . ".php");
+}
+
+spl_autoload_register('include_class');
+
+?>
+
+
+
 
