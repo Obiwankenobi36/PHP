@@ -1,21 +1,3 @@
- Napisati PHP skriptu ulaznice.php unutar koje treba
-implementirati klasu Ulaznice
-2. Klasa mora sadržavati pripadajući konstruktor i metodu
-Rezerviraj()
-3. Klasa mora sadržavati atribut $rezervacijeArray
-4. Unutar PHP skripte ulaznice.php implementirati na dnu i
-programski kod koji radi s klasom i HTML formu
-Zadatak za vježbu - 15. HTML forma mora sadržavati tri tekstualna polja za upis broja
-ulaznice, ime i prezime posjetitelja i submit gumb
-6. Metoda klase Rezerviraj() služi za zapisivanje podataka o
-rezervaciji ulaznica u CSV datoteku koja se zove
-rezervacije.csv i koja ima zaglavlje sljedećeg tipa:
-BrUlaznice;Ime;Prezime
-Zadatak za vježbu - 17. Programski kod na dnu skripte koji radi s HTML formom mora
-prihvatiti iz POST varijable upisane podatke iz tekstualnih
-formi i pomoću metode Rezerviraj() zapisati u CSV datoteku
-8. Prilikom izrade klase Ulaznice koristiti Singleton oblikovni
-obrazac (pattern)
 
 <?php
 
